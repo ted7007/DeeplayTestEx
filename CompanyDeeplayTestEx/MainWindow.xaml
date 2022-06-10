@@ -74,6 +74,9 @@
             </ListView.ItemTemplate>
         </ListView>
 
+        
+        
+        
         <Button Grid.Column="1" Grid.Row="4" Content="Add" Margin="10" Command="{Binding AddCommand}"/>
         <Button Grid.Column="2" Grid.Row="4" Content="Edit" Margin="10" Command="{Binding EditCommand}"/>
         <Button Grid.Column="3" Grid.Row="4" Content="Remove" Margin="10" Command="{Binding RemoveCommand}"/>

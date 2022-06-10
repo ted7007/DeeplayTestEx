@@ -51,7 +51,7 @@ namespace CompanyDeeplayTestEx.ViewModel
         public ComboBoxItem SortCompany { get; set; }
 
         public ComboBoxItem SortPost { get; set; }
-
+        
 
         #endregion
 

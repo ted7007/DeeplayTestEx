@@ -20,12 +20,13 @@ namespace Repository.Repositories
             this.db = context;
         }
 
-        public IEnumerable<Company> GetAllCompanies()
+        public BindingList<Company> GetAllCompanies()
         {
-            return db.Companies
+             db.Companies
                      .Include(c => c.Workers)
                         .ThenInclude(w => w.Post)
-                    .ToList();
+                    .Load();
+            return db.Companies.Local.ToBindingList();
         }
 
         public ObservableCollection<Company> GetAllCompaniesO()
@@ -152,5 +153,10 @@ namespace Repository.Repositories
             db.UniqueInfos.Remove(UI);
             db.SaveChanges();
         }
+
+        //public void SortWorkers()
+        //{
+        //    db.Workers.S
+        //}
     }
 }

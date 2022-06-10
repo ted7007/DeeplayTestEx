@@ -33,6 +33,10 @@ namespace CompanyDeeplayTestEx.ViewModel
 
         private ButtonCommand sortCommand;
 
+        private BindingList<Company> companies;
+
+        private List<Post> posts;
+
         #endregion
 
         #region properties
@@ -46,11 +50,15 @@ namespace CompanyDeeplayTestEx.ViewModel
 
         public ButtonCommand SortCommand { get { return sortCommand ?? (sortCommand = new ButtonCommand(sender => Sort())); } }
 
-        public BindingList<Worker> Workers { get { return workers; }}
+        public BindingList<Worker> Workers { get { return workers; } set { workers = value; } }
 
-        public ComboBoxItem SortCompany { get; set; }
+        public BindingList<Company> Companies { get { return companies; } }
 
-        public ComboBoxItem SortPost { get; set; }
+        public List<Post> Posts { get { return posts; } }
+
+        public Company SortCompany { get; set; }
+
+        public Post SortPost { get; set; }
         
 
         #endregion
@@ -61,6 +69,8 @@ namespace CompanyDeeplayTestEx.ViewModel
 
             db = new CompanyRepository(context);
             workers = db.GetAllWorkers();
+            companies = db.GetAllCompanies();
+            posts = db.GetAllPosts().ToList();
         }
 
         /// <summary>
@@ -148,7 +158,15 @@ namespace CompanyDeeplayTestEx.ViewModel
 
         public void Sort()
         {
-
+            if (SortCompany == null || SortPost == null)
+            {
+                MessageBox.Show("Выберите настройки сортировки!");
+                return;
+            }
+            SortedWorkers window = new SortedWorkers();
+            window.DataContext = new SortedWorkersVM 
+            { Workers = Workers.Where(w => w.Company.Name == SortCompany.Name && w.Post.Name == SortPost.Name).ToList()};
+            window.ShowDialog();
         }
        
         #region INPC
